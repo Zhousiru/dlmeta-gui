@@ -1,0 +1,20 @@
+{
+  "name": "dlmeta-gui",
+  "private": true,
+  "version": "0.0.0",
+  "main": "main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "e:serve": "vite build && electron ."
+  },
+  "dependencies": {
+    "vue": "^3.2.37"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.0.0",
+    "electron": "^20.0.1",
+    "vite": "^3.0.0"
+  }
+}
