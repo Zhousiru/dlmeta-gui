@@ -1,7 +1,18 @@
-# Vue 3 + Vite
+# DLmeta GUI
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+A simple GUI for DLmeta. Made with Electron & Vue.
 
-## Recommended IDE Setup
+## Scripts
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
+```
+yarn dev
+```
+```
+yarn build
+```
+```
+yarn preview
+```
+```
+yarn e:serve
+```
