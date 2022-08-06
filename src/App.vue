@@ -3,12 +3,16 @@
 </script>
 
 <template>
-<router-link to="/">Home</router-link>
-<router-link to="/setting">Setting</router-link>
-<router-link to="/detail/RJ123">Detail(RJ123)</router-link>
-<router-link to="/detail/RJ456">Detail(RJ456)</router-link>
+<div id="container">
   <router-view></router-view>
+</div>
 </template>
 
 <style scoped>
+#container {
+  min-width: 450px;
+  width: 80%;
+  margin: 0 auto;
+  margin-top: 60px;
+}
 </style>

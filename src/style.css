@@ -1,0 +1,51 @@
+body {
+    background-color: #e9dfd4;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, .9);
+    border-radius: 16px;
+    padding: 2em 2.8em;
+    box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
+}
+
+.card:not(:first-of-type) {
+    margin-top: 1.6em;
+}
+
+.card>h1 {
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    border: 2px #e9dfd4 solid;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    padding: .4em;
+    outline: none;
+    transition: all .2s;
+}
+
+input:focus {
+    border: 2px #e79a47 solid;
+    box-shadow: 0 0 0 3px rgba(231, 154, 71, .4);
+}
+
+.input-lable {
+    margin-bottom: .6rem;
+}
+
+.button{
+    font-size: 1rem;
+    padding: .4em 1.2em;
+    border-radius: 8px;
+    background-color: #e9dfd4;
+    border: 2px #00000000 solid;
+    outline: none;
+    transition: all .2s;
+}
+
+.button:focus{
+    border: 2px #e79a47 solid !important;
+}
