@@ -1,4 +1,6 @@
 <script>
+import { toRaw } from 'vue'
+
 export default {
     data() {
         return {
@@ -6,18 +8,20 @@ export default {
                 cliPath: "",
                 rawPath: "",
                 outputPath: ""
-            }
+            },
+            show: false
         }
     },
-    mounted() {
-        (async () => {
-            this.setting = await window.electronAPI.readSetting()
-        })()
+    async mounted() {
+        this.setting = await window.electronAPI.readSetting()
     },
     methods: {
         saveSetting: async function () {
-            console.log(this.setting)
-            // TODO: write setting
+            await window.electronAPI.saveSetting(toRaw(this.setting))
+            this.show = true
+            setTimeout(() => {
+                this.show = false
+            }, 1000)
         }
     }
 }
@@ -35,6 +39,9 @@ export default {
         <div class="input-lable">输出路径：</div>
         <input type="text" v-model="setting.outputPath">
         <button class="button" style="margin-top: 1.4rem;" @click="saveSetting()">保存</button>
+        <transition name="fade">
+            <span v-if="show" style="margin-left: .6em;">已保存</span>
+        </transition>
     </div>
 </template>
 
@@ -45,5 +52,15 @@ input {
 
 .input-lable:not(:first-of-type) {
     margin-top: 1.4rem;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>
