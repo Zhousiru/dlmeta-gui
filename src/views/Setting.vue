@@ -22,6 +22,16 @@ export default {
             setTimeout(() => {
                 this.show = false
             }, 1000)
+        },
+        selectSingle: async function (openType, target) {
+            let props
+            if (openType == 'file') {
+                props = ['openFile']
+            } else {
+                props = ['openDirectory']
+            }
+
+            this.setting[target] = (await window.electronAPI.showOpenDialog(props)).filePaths[0]
         }
     }
 }
@@ -36,11 +46,20 @@ export default {
     </div>
     <div class="card">
         <div class="input-lable">DLmeta CLI 路径：</div>
-        <input type="text" v-model="setting.cliPath">
+        <div class="combine">
+            <input type="text" v-model="setting.cliPath">
+            <button class="button" @click="selectSingle('file', 'cliPath')">...</button>
+        </div>
         <div class="input-lable">源路径：</div>
-        <input type="text" v-model="setting.rawPath">
+        <div class="combine">
+            <input type="text" v-model="setting.rawPath">
+            <button class="button" @click="selectSingle('dir', 'rawPath')">...</button>
+        </div>
         <div class="input-lable">输出路径：</div>
-        <input type="text" v-model="setting.outputPath">
+        <div class="combine">
+            <input type="text" v-model="setting.outputPath">
+            <button class="button" @click="selectSingle('dir', 'outputPath')">...</button>
+        </div>
         <button class="button" style="margin-top: 1.4rem;" @click="saveSetting()">保存</button>
         <transition name="fade">
             <span v-if="show" style="margin-left: .6em;">已保存</span>
@@ -55,6 +74,15 @@ input {
 
 .input-lable:not(:first-of-type) {
     margin-top: 1.4rem;
+}
+
+.combine {
+    display: flex;
+}
+
+.combine>button {
+    min-width: .1em;
+    margin-left: .5rem;
 }
 
 .fade-enter-active,
