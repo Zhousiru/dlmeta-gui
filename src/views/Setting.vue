@@ -31,7 +31,8 @@ export default {
                 props = ['openDirectory']
             }
 
-            this.setting[target] = (await window.electronAPI.showOpenDialog(props)).filePaths[0]
+            let r = (await window.electronAPI.showOpenDialog(props)).filePaths[0]
+            if (r) this.setting[target] = r
         }
     }
 }
