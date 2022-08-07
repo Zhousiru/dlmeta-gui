@@ -32,6 +32,9 @@ export default {
         <h1>设置</h1>
     </div>
     <div class="card">
+        <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
+    </div>
+    <div class="card">
         <div class="input-lable">DLmeta CLI 路径：</div>
         <input type="text" v-model="setting.cliPath">
         <div class="input-lable">源路径：</div>

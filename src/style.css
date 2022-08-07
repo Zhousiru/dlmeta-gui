@@ -36,7 +36,7 @@ input:focus {
     margin-bottom: .6rem;
 }
 
-.button{
+.button {
     font-size: 1rem;
     padding: .4em 1.2em;
     border-radius: 8px;
@@ -46,6 +46,14 @@ input:focus {
     transition: all .2s;
 }
 
-.button:focus{
+.button:focus {
     border: 2px #e79a47 solid !important;
+}
+
+.button.button-outline {
+    background-color: #00000000;
+}
+
+.button.button-outline:hover {
+    border: 2px #e9dfd4 solid;
 }
