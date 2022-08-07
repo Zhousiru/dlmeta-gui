@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 const path = require('path')
 
-const util = require('./util.cjs')
+const ipc = require('./internal/ipc.cjs')
+const setting = require('./internal/setting.cjs')
 
 const createWindow = () => {
     const win = new BrowserWindow({
@@ -24,12 +25,14 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
-    ipcMain.handle('_getFn', () => { return Object.keys(util) })
+    ipcMain.handle('_getFn', () => { return Object.keys(ipc) })
 
-    Object.keys(util).forEach(fn => {
+    Object.keys(ipc).forEach(fn => {
         console.log(`[INFO] reg handler: ${fn}`)
-        ipcMain.handle(fn, util[fn])
+        ipcMain.handle(fn, ipc[fn])
     })
+
+    setting.loadSetting()
 })
 
 app.on('window-all-closed', () => {
