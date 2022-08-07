@@ -16,3 +16,6 @@ yarn preview
 ```
 yarn e:serve
 ```
+```
+yarn e:dev
+```
