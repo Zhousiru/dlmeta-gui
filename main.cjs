@@ -24,7 +24,12 @@ app.whenReady().then(() => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow()
     })
 
-    ipcMain.handle('readSetting', util.readSetting)
+    ipcMain.handle('_getFn', () => { return Object.keys(util) })
+
+    Object.keys(util).forEach(fn => {
+        console.log(`[INFO] reg handler: ${fn}`)
+        ipcMain.handle(fn, util[fn])
+    })
 })
 
 app.on('window-all-closed', () => {
