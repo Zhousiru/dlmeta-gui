@@ -5,7 +5,7 @@ body {
 .card {
     background-color: rgba(255, 255, 255, .9);
     border-radius: 16px;
-    padding: 2em 2.8em;
+    padding: 2em 2em;
     box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
 }
 
@@ -48,7 +48,7 @@ input:focus {
 }
 
 .button:focus {
-    border: 2px #e79a47 solid !important;
+    border: 2px #e79a47 solid;
 }
 
 .button.button-outline {
