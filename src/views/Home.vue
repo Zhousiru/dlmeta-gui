@@ -38,6 +38,17 @@ export default {
 
                 this.raw.detailed.push([folder, detail])
             });
+        },
+        getCoverStyle: function (i) {
+            if(i[1].albumArt){
+                return {
+                    backgroundImage: `url(${i[1].albumArt})`
+                }
+            }
+
+            return {
+                background: `linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)), url(${i[1].dlImage[0]})`
+            }
         }
     }
 }
@@ -58,7 +69,7 @@ export default {
             <li v-for="i in raw.original">
                 <div class="entry-image"></div>
                 <div class="entry-overview">
-                    <div class="entry-title">{{ i[0] }}</div>
+                    <div class="entry-title" style="font-style: italic; color: rgba(0, 0, 0, .8)">{{ i[0] }}</div>
                 </div>
             </li>
         </ul>
@@ -67,7 +78,7 @@ export default {
         <div>未处理</div>
         <ul>
             <li v-for="i in raw.detailed">
-                <div class="entry-image"></div>
+                <div class="entry-image" :style="getCoverStyle(i)"></div>
                 <div class="entry-overview">
                     <div class="entry-title">{{ i[1].title }}</div>
                 </div>
@@ -78,7 +89,7 @@ export default {
         <div>已完成</div>
         <ul>
             <li v-for="i in raw.done">
-                <div class="entry-image"></div>
+                <div class="entry-image" :style="getCoverStyle(i)"></div>
                 <div class="entry-overview">
                     <div class="entry-title">{{ i[1].title }}</div>
                 </div>
@@ -92,8 +103,14 @@ export default {
     display: flex;
 }
 
+.list {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .list>div {
     color: rgba(0, 0, 0, .5);
+    padding: 0 2rem;
 }
 
 .list>ul {
@@ -104,14 +121,10 @@ export default {
 
 .list>ul>li {
     height: 150px;
-    border-radius: 16px;
     transition: all .2s;
     display: flex;
     overflow: hidden;
-}
-
-.list>ul>li:not(:first-child) {
-    margin-top: .6rem;
+    padding: 1rem 2rem;
 }
 
 .list>ul>li:hover {
@@ -120,7 +133,8 @@ export default {
 }
 
 .entry-image {
-    background-color: royalblue;
+    background-color: #a5a5a5;
+    background-size: cover !important;
     border-radius: 16px;
     height: 150px;
     width: 150px;
