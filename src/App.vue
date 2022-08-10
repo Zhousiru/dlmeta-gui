@@ -13,6 +13,6 @@
   min-width: 450px;
   width: 80%;
   margin: 0 auto;
-  margin-top: 60px;
+  margin: 60px auto;
 }
 </style>
