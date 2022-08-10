@@ -1,5 +1,10 @@
 <script>
+import HomeEntry from '../components/HomeEntry.vue'
+
 export default {
+    components: {
+        HomeEntry
+    },
     data() {
         return {
             raw: {
@@ -38,17 +43,6 @@ export default {
 
                 this.raw.detailed.push([folder, detail])
             });
-        },
-        getCoverStyle: function (i) {
-            if(i[1].albumArt){
-                return {
-                    backgroundImage: `url(${i[1].albumArt})`
-                }
-            }
-
-            return {
-                background: `linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)), url(${i[1].dlImage[0]})`
-            }
         }
     }
 }
@@ -66,34 +60,19 @@ export default {
     <div class="card list" id="list">
         <div>未标记</div>
         <ul>
-            <li v-for="i in raw.original">
-                <div class="entry-image"></div>
-                <div class="entry-overview">
-                    <div class="entry-title" style="font-style: italic; color: rgba(0, 0, 0, .8)">{{ i[0] }}</div>
-                </div>
-            </li>
+            <home-entry v-for="i in raw.original" :elem="i"></home-entry>
         </ul>
     </div>
     <div class="card list">
         <div>未处理</div>
         <ul>
-            <li v-for="i in raw.detailed">
-                <div class="entry-image" :style="getCoverStyle(i)"></div>
-                <div class="entry-overview">
-                    <div class="entry-title">{{ i[1].title }}</div>
-                </div>
-            </li>
+            <home-entry v-for="i in raw.detailed" :elem="i"></home-entry>
         </ul>
     </div>
     <div class="card list">
         <div>已完成</div>
         <ul>
-            <li v-for="i in raw.done">
-                <div class="entry-image" :style="getCoverStyle(i)"></div>
-                <div class="entry-overview">
-                    <div class="entry-title">{{ i[1].title }}</div>
-                </div>
-            </li>
+            <home-entry v-for="i in raw.done" :elem="i"></home-entry>
         </ul>
     </div>
 </template>
@@ -117,40 +96,5 @@ export default {
     list-style: none;
     padding: 0;
     margin: 1rem 0 0 0;
-}
-
-.list>ul>li {
-    height: 150px;
-    transition: all .2s;
-    display: flex;
-    overflow: hidden;
-    padding: 1rem 2rem;
-}
-
-.list>ul>li:hover {
-    background-color: rgba(0, 0, 0, .05);
-    cursor: pointer;
-}
-
-.entry-image {
-    background-color: #a5a5a5;
-    background-size: cover !important;
-    border-radius: 16px;
-    height: 150px;
-    width: 150px;
-}
-
-.entry-overview {
-    flex: 1;
-    padding: .8em;
-}
-
-.entry-title {
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    word-break: break-all;
-    font-size: 1.2rem;
 }
 </style>
