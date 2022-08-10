@@ -42,7 +42,7 @@ export default {
     </li>
 </template>
 
-<style>
+<style scoped>
 li {
     height: 150px;
     transition: all .2s;

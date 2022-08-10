@@ -18,6 +18,11 @@ body {
     margin: 0;
 }
 
+.card-lable {
+    color: rgba(0, 0, 0, .5);
+    margin-bottom: 1rem;
+}
+
 input {
     border: 2px #e9dfd4 solid;
     font-size: 1.2rem;
