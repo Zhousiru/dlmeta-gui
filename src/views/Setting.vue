@@ -46,17 +46,17 @@ export default {
         <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
     </div>
     <div class="card">
-        <div class="input-lable">DLmeta CLI 路径：</div>
+        <div class="input-label">DLmeta CLI 路径：</div>
         <div class="combine">
             <input type="text" v-model="setting.cliPath">
             <button class="button" @click="selectSingle('file', 'cliPath')">...</button>
         </div>
-        <div class="input-lable">源路径：</div>
+        <div class="input-label">源路径：</div>
         <div class="combine">
             <input type="text" v-model="setting.rawPath">
             <button class="button" @click="selectSingle('dir', 'rawPath')">...</button>
         </div>
-        <div class="input-lable">输出路径：</div>
+        <div class="input-label">输出路径：</div>
         <div class="combine">
             <input type="text" v-model="setting.outputPath">
             <button class="button" @click="selectSingle('dir', 'outputPath')">...</button>
@@ -73,7 +73,7 @@ input {
     width: 100%;
 }
 
-.input-lable:not(:first-of-type) {
+.input-label:not(:first-child) {
     margin-top: 1.4rem;
 }
 

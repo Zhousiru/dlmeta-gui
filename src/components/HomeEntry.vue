@@ -47,7 +47,7 @@ li {
     height: 150px;
     transition: all .2s;
     display: flex;
-    overflow: hidden;
+    /* overflow: hidden; */
     padding: 1rem 2rem;
 }
 
