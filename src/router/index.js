@@ -16,7 +16,7 @@ const routes = [
         component: Setting,
     },
     {
-        path: "/detail/:id",
+        path: "/detail/:folder",
         name: "Detail",
         component: Detail,
     }

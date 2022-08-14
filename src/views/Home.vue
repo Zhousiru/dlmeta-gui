@@ -58,19 +58,19 @@ export default {
             style="margin-left: auto;">设置</button>
     </div>
     <div class="card list" id="list">
-        <div class="card-lable">未标记</div>
+        <div class="card-label">未标记</div>
         <ul>
             <home-entry v-for="i in raw.original" :elem="i"></home-entry>
         </ul>
     </div>
     <div class="card list">
-        <div class="card-lable">未处理</div>
+        <div class="card-label">未处理</div>
         <ul>
             <home-entry v-for="i in raw.detailed" :elem="i"></home-entry>
         </ul>
     </div>
     <div class="card list">
-        <div class="card-lable">已完成</div>
+        <div class="card-label">已完成</div>
         <ul>
             <home-entry v-for="i in raw.done" :elem="i"></home-entry>
         </ul>
@@ -87,7 +87,7 @@ export default {
     padding-right: 0;
 }
 
-.card-lable {
+.card-label {
     padding: 0 2rem;
 }
 
