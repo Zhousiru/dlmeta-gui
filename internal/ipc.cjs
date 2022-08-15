@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { dialog } = require('electron')
+const { dialog, remote } = require('electron')
 
 const setting = require('./setting.cjs');
 const path = require('path');
@@ -37,10 +37,15 @@ exports.getFolderList = async (_, target) => {
 exports.getDlmetaDetail = async (_, folder) => {
     let data
     try {
-        data = await fs.promises.readFile(path.join(setting.get('rawPath'), folder, '.dlmeta.json'))
+        data = await fs.promises.readFile(path.resolve(setting.get('rawPath'), folder, '.dlmeta.json'))
     } catch (e) {
         if (e.code == 'ENOENT') return undefined
     }
 
     return JSON.parse(data.toString())
+}
+
+exports.resolvePath = async (_, folder, relPath) => {
+    let folderPath = path.resolve(setting.get('rawPath'), folder)
+    return path.resolve(folderPath, relPath)
 }

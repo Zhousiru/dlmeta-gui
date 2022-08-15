@@ -8,7 +8,7 @@ export default {
     data() {
         return {
             raw: {
-                detailed: [],
+                ready: [],
                 done: [],
                 original: []
             }
@@ -20,12 +20,11 @@ export default {
     methods: {
         getList: async function () {
             this.raw = {
-                detailed: [],
+                ready: [],
                 done: [],
                 original: []
             }
 
-            let outputFolderList = await window.electronAPI.getFolderList('outputPath')
             let rawFolderList = await window.electronAPI.getFolderList('rawPath')
 
             rawFolderList.forEach(async folder => {
@@ -36,12 +35,13 @@ export default {
                     return
                 }
 
-                if (outputFolderList.includes((detail.title))) {
+                if (detail.status == 'done') {
                     this.raw.done.push([folder, detail])
                     return
                 }
 
-                this.raw.detailed.push([folder, detail])
+                // status: 'ready'
+                this.raw.ready.push([folder, detail])
             });
         }
     }
@@ -66,7 +66,7 @@ export default {
     <div class="card list">
         <div class="card-label">未处理</div>
         <ul>
-            <home-entry v-for="i in raw.detailed" :elem="i"></home-entry>
+            <home-entry v-for="i in raw.ready" :elem="i"></home-entry>
         </ul>
     </div>
     <div class="card list">

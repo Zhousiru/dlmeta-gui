@@ -1,17 +1,26 @@
 <script>
 export default {
     props: ['elem'],
-    methods: {
-        getCoverStyle: function (i) {
-            if (i[1]) {
-                if (i[1].albumArt) {
-                    return {
-                        backgroundImage: `url(${i[1].albumArt})`
-                    }
+    data() {
+        return {
+            albumArtStyle: {}
+        }
+    },
+    async mounted() {
+        if (this.elem[1]) {
+            let albumArt = this.elem[1].albumArt
+            let schema = albumArt.split('//')[0]
+            if (['http:', 'https:'].includes(schema)) {
+                // remote image
+                this.albumArtStyle = {
+                    backgroundImage: `url(${albumArt})`
                 }
-
-                return {
-                    background: `linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .4)), url(${i[1].dlImage[0]})`
+            } else {
+                // local image
+                let absPath = await window.electronAPI.resolvePath(this.elem[0], this.elem[1].albumArt)
+                let url = absPath.replaceAll('\\', '/')
+                this.albumArtStyle = {
+                    backgroundImage: `url(${url})`
                 }
             }
         }
@@ -29,13 +38,23 @@ export default {
             if (!this.elem[1]) return this.elem[0]
             return this.elem[1].title
         }
+    },
+    methods: {
+        navigate(){
+            if (this.elem[1]) {
+                // already have dlmeta config
+                this.$router.push(`/detail/${this.elem[0]}`)
+            } else {
+                // TODO
+            }
+        }
     }
 }
 </script>
 
 <template>
-    <li @click="this.$router.push(`/detail/${elem[0]}`)">
-        <div class="entry-image" :style="getCoverStyle(elem)"></div>
+    <li @click="navigate()">
+        <div class="entry-image" :style="albumArtStyle"></div>
         <div class="entry-overview">
             <div class="entry-title" :style="titleStyle">{{ title }}</div>
         </div>
