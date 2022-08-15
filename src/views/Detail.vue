@@ -1,4 +1,5 @@
 <script>
+import { toRaw } from 'vue'
 import AudioCard from '../components/AudioCard.vue'
 
 export default {
@@ -7,11 +8,21 @@ export default {
     },
     data() {
         return {
-            folder: ''
+            detail: {}
         }
     },
-    mounted() {
-        this.folder = this.$route.params.folder
+    async mounted() {
+        this.detail = await window.electronAPI.getDlmetaDetail(this.$route.params.folder)
+    },
+    computed: {
+        cvStr() {
+            let cvList = []
+            for (let i in this.detail.cv) {
+                cvList.push(this.detail.cv[i])
+            }
+
+            return cvList.join(' / ')
+        }
     }
 }
 </script>
@@ -20,7 +31,7 @@ export default {
     <div class="card">
         <h1>详情</h1>
         <div id="title">
-            标题标题标题标题标题标题标题标题标题标题
+            {{ detail.title }}
         </div>
     </div>
     <div class="card">
@@ -32,33 +43,31 @@ export default {
             <tr>
                 <td>状态</td>
                 <td>
-                    已完成
+                    {{ detail.status }}
                 </td>
             </tr>
             <tr>
                 <td>标题</td>
                 <td>
-                    标题标题标题标题标题标题标题标题标题标题
+                    {{ detail.title }}
                 </td>
             </tr>
             <tr>
                 <td>ID</td>
-                <td>RJ23333333</td>
+                <td>{{ detail.id }}</td>
             </tr>
             <tr>
                 <td>封面</td>
-                <td>
-                    <div>path/to/album-art</div>
-                </td>
+                <td>{{ detail.albumArt }}</td>
             </tr>
             <tr>
                 <td>团体</td>
-                <td>团体名</td>
+                <td>{{ detail.circle }}</td>
             </tr>
             <tr>
                 <td>声优</td>
                 <td>
-                    CV1 / CV2
+                    {{ cvStr }}
                 </td>
             </tr>
         </table>
