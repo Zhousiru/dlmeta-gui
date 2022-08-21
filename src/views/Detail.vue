@@ -1,5 +1,4 @@
 <script>
-import { toRaw } from 'vue'
 import AudioCard from '../components/AudioCard.vue'
 
 export default {
@@ -72,7 +71,7 @@ export default {
             </tr>
         </table>
     </div>
-    <audio-card></audio-card>
+    <audio-card :audioMap="detail.audioMap" :editable="false"></audio-card>
 </template>
 
 <style scoped>
