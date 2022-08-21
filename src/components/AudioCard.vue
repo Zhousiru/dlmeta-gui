@@ -1,11 +1,21 @@
 <script>
 export default {
-    props: ['audioMap'],
-    methods: {
-
+    props: ['audioMap', 'editable'],
+    data() {
+        return {
+            showDetail: [""],
+            audioListRef: {}
+        }
     },
-    computed: {
-
+    methods: {
+        toggleDetail(aid) {
+            if (this.showDetail.includes(aid)) {
+                let index = this.showDetail.indexOf(aid)
+                this.showDetail.splice(index, 1)
+            } else {
+                this.showDetail.push(aid)
+            }
+        }
     }
 }
 </script>
@@ -14,44 +24,40 @@ export default {
     <div class="card audio">
         <div class="card-label">音频</div>
         <ol class="audio-list">
-            <li>
-                <div class="list-header">
-                    <span class="order"># 10</span>
-                    <span class="list-title">
-                        AudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitleAudioTitle
-                    </span>
+            <li v-for="i in audioMap">
+                <div class="list-header" @click="toggleDetail(i.aid)">
+                    <span class="order"># {{ i.order }}</span>
+                    <span class="list-title" :class="{ 'ignored-title': i.ignore }">{{ i.title }}</span>
                 </div>
-                <div class="list-detail">
+                <div class="list-detail" v-if="showDetail.includes(i.aid)">
                     <table id="info-table">
                         <tr>
                             <td>ID</td>
-                            <td>TR_01_XXXXXXXXXX</td>
+                            <td>{{ i.aid }}</td>
                         </tr>
                         <tr>
                             <td>标题</td>
                             <td>
-                                标题标题标题标题标题标题标题标题标题标题
+                                {{ i.title }}
                             </td>
                         </tr>
                         <tr>
                             <td>顺序</td>
-                            <td>0</td>
+                            <td>{{ i.order }}</td>
                         </tr>
                         <tr>
                             <td>忽略</td>
-                            <td>否</td>
+                            <input type="checkbox" :checked="i.ignore" :disabled="!editable">
                         </tr>
                         <tr>
                             <td>源</td>
                             <td>
                                 <ul class="source-list">
                                     <li>
-                                        <label>
-                                            <input type="checkbox">
-                                            path/to/audio/source1</label>
-                                        <label>
-                                            <input type="checkbox">
-                                            path/to/audio/source2</label>
+                                        <label v-for="j in i.source" :class="{ 'ignored-title': j.ignore }">
+                                            <input type="checkbox" :checked="!j.ignore" :disabled="!editable">{{
+                                                    j.path
+                                            }}</label>
                                     </li>
                                 </ul>
                             </td>
@@ -142,4 +148,9 @@ td:nth-child(1) {
     margin: 0;
 }
 
+.ignored-title {
+    font-style: italic;
+    color: rgba(0, 0, 0, .8);
+    text-decoration: line-through;
+}
 </style>
