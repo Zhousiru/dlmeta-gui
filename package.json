@@ -8,15 +8,25 @@
     "build": "vite build",
     "preview": "vite preview",
     "e:serve": "vite build && electron .",
-    "e:dev": "vite build --mode development && electron ."
+    "e:dev": "vite build --mode development && electron .",
+    "eb:pack": "vite build && electron-builder --dir",
+    "eb:dist": "vite build && electron-builder"
   },
   "dependencies": {
     "vue": "^3.2.37",
     "vue-router": "4"
   },
   "devDependencies": {
+    "electron-builder": "^23.3.3",
     "@vitejs/plugin-vue": "^3.0.0",
     "electron": "^20.0.1",
     "vite": "^3.0.0"
+  },
+  "build": {
+    
+    "appId": "moe.qxq.dlmeta-gui",
+    "directories": {
+      "output": "./build"
+    }
   }
 }
