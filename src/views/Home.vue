@@ -1,9 +1,9 @@
 <script>
-import HomeEntry from '../components/HomeEntry.vue'
+import OverviewCard from '../components/OverviewCard.vue'
 
 export default {
     components: {
-        HomeEntry
+        OverviewCard
     },
     data() {
         return {
@@ -31,17 +31,26 @@ export default {
                 let detail = await window.electronAPI.getDlmetaDetail(folder)
 
                 if (!detail) {
-                    this.raw.original.push([folder, undefined])
+                    this.raw.original.push({
+                        folderName: folder,
+                        detail: undefined
+                    })
                     return
                 }
 
                 if (detail.status == 'done') {
-                    this.raw.done.push([folder, detail])
+                    this.raw.done.push({
+                        folderName: folder,
+                        detail: detail
+                    })
                     return
                 }
 
                 // status: 'ready'
-                this.raw.ready.push([folder, detail])
+                this.raw.ready.push({
+                    folderName: folder,
+                    detail: detail
+                })
             });
         }
     }
@@ -57,43 +66,13 @@ export default {
         <button class="button button-outline" @click="this.$router.push('/setting')"
             style="margin-left: auto;">设置</button>
     </div>
-    <div class="card list" id="list">
-        <div class="card-label">未标记</div>
-        <ul>
-            <home-entry v-for="i in raw.original" :elem="i"></home-entry>
-        </ul>
-    </div>
-    <div class="card list">
-        <div class="card-label">未处理</div>
-        <ul>
-            <home-entry v-for="i in raw.ready" :elem="i"></home-entry>
-        </ul>
-    </div>
-    <div class="card list">
-        <div class="card-label">已完成</div>
-        <ul>
-            <home-entry v-for="i in raw.done" :elem="i"></home-entry>
-        </ul>
-    </div>
+    <overview-card :obj="raw.original" title="未标记"></overview-card>
+    <overview-card :obj="raw.ready" title="已标记"></overview-card>
+    <overview-card :obj="raw.done" title="已完成"></overview-card>
 </template>
 
 <style scoped>
 #nav {
     display: flex;
-}
-
-.list {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.card-label {
-    padding: 0 2rem;
-}
-
-.list>ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 }
 </style>
