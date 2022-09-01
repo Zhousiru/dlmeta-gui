@@ -15,15 +15,15 @@ export default {
                     let schema = albumArt.split('//')[0]
                     if (['http:', 'https:'].includes(schema)) {
                         // remote image
-                        this.coverStyle[el.folderName] = {
+                        this.coverStyle[el.id] = {
                             backgroundImage: `url(${albumArt})`
                         }
                     } else {
                         // local image
-                        let absPath = await window.electronAPI.resolvePath(el.folderName, el.detail.albumArt)
+                        let absPath = await window.electronAPI.resolvePath(el.id, el.detail.albumArt)
                         let url = absPath.replaceAll('\\', '/')
 
-                        this.coverStyle[el.folderName] = {
+                        this.coverStyle[el.id] = {
                             backgroundImage: `url(${url})`
                         }
                     }
@@ -33,12 +33,13 @@ export default {
         }
     },
     methods: {
-        navigate(el) {
+        async navigate(el) {
             if (el.detail) {
                 // already have dlmeta config
-                this.$router.push(`/detail/${el.folderName}`)
+                this.$router.push(`/detail/${el.id}`)
             } else {
-                // TODO
+                // no dlmeta config founded. navigate to process view(single)
+                this.$router.push(`/process/${el.id}`)
             }
         },
         getTitleStyle(el) {
@@ -51,7 +52,7 @@ export default {
         },
         getTitle(el) {
             if (el.detail) return el.detail.title
-            return el.folderName
+            return el.folder
         }
     }
 }
@@ -62,7 +63,7 @@ export default {
         <div class="card-label">{{ title }}</div>
         <ul>
             <li v-for="el in obj" @click="navigate(el)">
-                <div class="entry-image" :style="coverStyle[el.folderName]"></div>
+                <div class="entry-image" :style="coverStyle[el.id]"></div>
                 <div class="entry-overview">
                     <div class="entry-title" :style="getTitleStyle(el)">{{ getTitle(el) }}</div>
                 </div>

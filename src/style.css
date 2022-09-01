@@ -1,5 +1,19 @@
+:root {
+    --color-plain: #e9dfd4;
+    --color-accent: #e79a47;
+    --color-primary: #f1ece7;
+    --color-success: #d7e9d4;
+    --color-error: #e9d4d8;
+    --color-info: #d4e1e9;
+    --color-warn: #e9dcd4;
+}
+
+::selection {
+    background-color: rgba(0, 0, 0, .2) !important;
+}
+
 body {
-    background-color: #e9dfd4;
+    background-color: var(--color-plain);
 }
 
 .card {
@@ -18,13 +32,21 @@ body {
     margin: 0;
 }
 
+.card>.subtitle {
+    margin-top: .2rem;
+    color: rgba(0, 0, 0, .6);
+    word-break: break-all;
+}
+
 .card-label {
     color: rgba(0, 0, 0, .5);
     margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 input[type="text"] {
-    border: 2px #e9dfd4 solid;
+    border: 2px var(--color-primary) solid;
     font-size: 1.2rem;
     border-radius: 8px;
     padding: .4em;
@@ -33,7 +55,7 @@ input[type="text"] {
 }
 
 input[type="text"]:focus {
-    border: 2px #e79a47 solid;
+    border: 2px var(--color-accent) solid;
     box-shadow: 0 0 0 3px rgba(231, 154, 71, .4);
 }
 
@@ -49,7 +71,7 @@ input[type="checkbox"] {
     font-size: 1rem;
     padding: .4em 1.2em;
     border-radius: 8px;
-    background-color: #e9dfd4;
+    background-color: var(--color-primary);
     border: 2px #00000000 solid;
     outline: none;
     transition: all .2s;
@@ -57,7 +79,11 @@ input[type="checkbox"] {
 }
 
 .button:focus {
-    border: 2px #e79a47 solid;
+    border: 2px var(--color-accent) solid;
+}
+
+.button:disabled {
+    filter: grayscale();
 }
 
 .button.button-outline {
@@ -65,5 +91,57 @@ input[type="checkbox"] {
 }
 
 .button.button-outline:hover {
-    border: 2px #e9dfd4 solid;
+    border: 2px var(--color-plain) solid;
+}
+
+.badge {
+    border-radius: 5px;
+    color: rgba(0, 0, 0, .4);
+    font-weight: bold;
+    font-size: .8rem;
+}
+
+.badge.success {
+    background-color: var(--color-success);
+    box-shadow: 0 0 0 .4rem var(--color-success);
+}
+
+.badge.error {
+    background-color: var(--color-error);
+    box-shadow: 0 0 0 .4rem var(--color-error);
+}
+
+.badge.info {
+    background-color: var(--color-info);
+    box-shadow: 0 0 0 .4rem var(--color-info);
+}
+
+.badge.warn {
+    background-color: var(--color-warn);
+    box-shadow: 0 0 0 .4rem var(--color-warn);
+}
+
+.spinner {
+    display: inline-block;
+    border: .15rem rgba(0, 0, 0, .1) solid;
+    border-top: .15rem rgba(0, 0, 0, .4) solid;
+    border-radius: 50%;
+    width: 1rem;
+    height: 1rem;
+    animation: spinner .5s linear infinite;
+    box-sizing: border-box;
+}
+
+@keyframes spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.card-label>.spinner {
+    margin-left: .5rem;
 }

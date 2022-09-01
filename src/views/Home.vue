@@ -25,14 +25,15 @@ export default {
                 original: []
             }
 
-            let rawFolderList = await window.electronAPI.getFolderList('rawPath')
+            let m = await window.electronAPI.getRawList()
 
-            rawFolderList.forEach(async folder => {
-                let detail = await window.electronAPI.getDlmetaDetail(folder)
+            m.forEach(async el => {
+                let detail = await window.electronAPI.getDlmetaDetail(el.id)
 
                 if (!detail) {
                     this.raw.original.push({
-                        folderName: folder,
+                        id: el.id,
+                        folder: el.folder,
                         detail: undefined
                     })
                     return
@@ -40,17 +41,20 @@ export default {
 
                 if (detail.status == 'done') {
                     this.raw.done.push({
-                        folderName: folder,
+                        id: el.id,
+                        folder: el.folder,
                         detail: detail
                     })
                     return
                 }
 
-                // status: 'ready'
-                this.raw.ready.push({
-                    folderName: folder,
-                    detail: detail
-                })
+                if (detail.status == 'ready') {
+                    this.raw.ready.push({
+                        id: el.id,
+                        folder: el.folder,
+                        detail: detail
+                    })
+                }
             });
         }
     }
@@ -67,7 +71,7 @@ export default {
             style="margin-left: auto;">设置</button>
     </div>
     <overview-card :obj="raw.original" title="未标记"></overview-card>
-    <overview-card :obj="raw.ready" title="已标记"></overview-card>
+    <overview-card :obj="raw.ready" title="待转换"></overview-card>
     <overview-card :obj="raw.done" title="已完成"></overview-card>
 </template>
 

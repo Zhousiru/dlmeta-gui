@@ -61,9 +61,9 @@ export default {
             <input type="text" v-model="setting.outputPath">
             <button class="button" @click="selectSingle('dir', 'outputPath')">...</button>
         </div>
-        <button class="button" style="margin-top: 1.4rem;" @click="saveSetting()">保存</button>
+        <button class="button" style="margin-top: 1.4rem;" @click="saveSetting()">保存 & 应用</button>
         <transition name="fade">
-            <span v-if="show" style="margin-left: .6em;">已保存</span>
+            <span v-if="show" style="margin-left: .6em;">已保存 & 应用</span>
         </transition>
     </div>
 </template>
