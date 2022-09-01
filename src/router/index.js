@@ -26,11 +26,11 @@ const routes = [
         name: "Process",
         component: Process,
     }
-];
+]
 
 const router = createRouter({
     routes,
     history: createWebHashHistory()
-});
+})
 
-export default router;
+export default router
