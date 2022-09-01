@@ -11,7 +11,7 @@ export default {
         }
     },
     async mounted() {
-        this.detail = await window.electronAPI.getDlmetaDetail(this.$route.params.folder)
+        this.detail = await window.electronAPI.getDlmetaDetail(this.$route.params.id)
     },
     computed: {
         cvStr() {
@@ -29,7 +29,7 @@ export default {
 <template>
     <div class="card">
         <h1>详情</h1>
-        <div id="title">
+        <div class="subtitle">
             {{ detail.title }}
         </div>
     </div>
@@ -75,12 +75,6 @@ export default {
 </template>
 
 <style scoped>
-#title {
-    margin-top: .2rem;
-    color: rgba(0, 0, 0, .6);
-    word-break: break-all;
-}
-
 #info-table {
     border-collapse: separate;
     border-spacing: 1.2rem;

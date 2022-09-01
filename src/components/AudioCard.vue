@@ -99,7 +99,6 @@ export default {
     transition: all .2s;
     padding: 1rem 2rem;
     border-top: 1px rgba(0, 0, 0, .1) solid;
-    position: relative;
 }
 
 li:first-child>.list-header {
