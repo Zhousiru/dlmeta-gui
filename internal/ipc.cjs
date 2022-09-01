@@ -1,5 +1,4 @@
 const fs = require('fs')
-const { exec } = require('child_process')
 const { dialog, remote } = require('electron')
 
 const setting = require('./setting.cjs')

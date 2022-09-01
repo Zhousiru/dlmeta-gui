@@ -3,9 +3,9 @@
 </script>
 
 <template>
-<div id="container">
-  <router-view></router-view>
-</div>
+  <div id="container">
+    <router-view></router-view>
+  </div>
 </template>
 
 <style scoped>
