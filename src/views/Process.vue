@@ -92,6 +92,14 @@ export default {
                     this.isLoading = false
                 }
             })
+        },
+        isEditable(el) {
+            return el.status == statusCode.ready
+        },
+        editDetail(el) {
+            if (el.status == statusCode.ready) {
+                this.$router.push(`/editor/${el.id}`)
+            }
         }
     },
     watch: {
@@ -137,7 +145,7 @@ export default {
             状态<span class="spinner" v-if="isLoading"></span>
         </div>
         <ol class="status-list">
-            <li v-for="el in procList">
+            <li v-for="el in procList" @click="editDetail(el)" :class="{ 'editable': isEditable(el) }">
                 <div class="title" :style="getTitleStyle(el)">
                     {{ getTitle(el) }}
                 </div>
@@ -193,6 +201,15 @@ export default {
 
 .status-list>li>.title {
     flex: 1;
+}
+
+.status-list>li.editable {
+    transition: all .2s;
+    cursor: pointer;
+}
+
+.status-list>li.editable:hover {
+    background-color: rgba(0, 0, 0, .05);
 }
 
 .status {

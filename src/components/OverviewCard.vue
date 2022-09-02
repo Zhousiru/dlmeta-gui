@@ -34,11 +34,11 @@ export default {
     },
     methods: {
         async navigate(el) {
-            if (el.detail) {
-                // already have dlmeta config
+            if (el.detail && el.detail.status == 'done') {
+                // already done
                 this.$router.push(`/detail/${el.id}`)
             } else {
-                // no dlmeta config founded. navigate to process view(single)
+                // no dlmeta config founded or not converted. navigate to process view(single)
                 this.$router.push(`/process/${el.id}`)
             }
         },

@@ -4,6 +4,7 @@ import Home from "@/views/Home.vue"
 import Setting from "@/views/Setting.vue"
 import Detail from "@/views/Detail.vue"
 import Process from "@/views/Process.vue"
+import Editor from "@/views/Editor.vue"
 
 const routes = [
     {
@@ -25,6 +26,11 @@ const routes = [
         path: "/process/:id",
         name: "Process",
         component: Process,
+    },
+    {
+        path: "/editor/:id",
+        name: "Editor",
+        component: Editor
     }
 ]
 
