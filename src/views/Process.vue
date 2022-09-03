@@ -163,28 +163,8 @@ export default {
 </template>
 
 <style scoped>
-.list-card {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.list-card .card-label,
-.card-container {
-    padding: 0 2rem;
-}
-
-.card-container {
-    margin-top: 1rem;
-}
-
 .card-container>button:not(:first-child) {
     margin-left: 1rem;
-}
-
-.status-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
 }
 
 .status-list>li {

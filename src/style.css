@@ -45,6 +45,27 @@ body {
     align-items: center;
 }
 
+.list-card {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.list-card .card-label,
+.list-card .card-container {
+    padding: 0 2rem;
+}
+
+.list-card .card-container {
+    margin-top: 1rem;
+}
+
+.list-card ul,
+.list-card ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
 input[type="text"] {
     border: 2px var(--color-primary) solid;
     font-size: 1.2rem;
@@ -65,6 +86,15 @@ input[type="checkbox"] {
 
 .input-label {
     margin-bottom: .6rem;
+}
+
+.form-combine {
+    display: flex;
+}
+
+.form-combine>button {
+    min-width: .1em;
+    margin-left: .5rem;
 }
 
 .button {
@@ -144,4 +174,36 @@ input[type="checkbox"] {
 
 .card-label>.spinner {
     margin-left: .5rem;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+    z-index: 233;
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
+    border: 2px var(--color-primary) solid;
+}
+
+.alert {
+    border: 2px rgba(0, 0, 0, 0.05) solid;
+    padding: 1rem;
+    border-radius: 8px;
+    color: rgba(0, 0, 0, .9);
+}
+
+.alert.success {
+    background-color: var(--color-success);
+}
+
+.alert.warn {
+    background-color: var(--color-warn);
+}
+
+.alert.error {
+    background-color: var(--color-error);
 }

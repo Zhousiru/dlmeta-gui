@@ -26,7 +26,10 @@ export default {
             {{ detail.title }}
         </div>
     </div>
-    <audio-card :audio-map="detail.audioMap" :editable="true"></audio-card>
+    <div class="card">
+        <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
+    </div>
+    <audio-card :audioMap="detail.audioMap" :editable="true"></audio-card>
 </template>
 
 <style scoped>
