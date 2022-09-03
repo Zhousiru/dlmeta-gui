@@ -50,8 +50,11 @@ export default {
             let sourceFlag = false
             this.tempAudioMap.some(el => {
                 if (el.ignore) return
+
                 let existType = []
                 el.source.some(s => {
+                    if (s.ignore) return
+
                     let type = s.path.split('.').at(-1).toLowerCase()
                     if (existType.includes(type)) {
                         sourceFlag = true
@@ -68,6 +71,7 @@ export default {
             let orderFlag = false
             this.tempAudioMap.some(el => {
                 if (el.ignore) return
+
                 if (existOrder.includes(el.order)) {
                     orderFlag = true
                     return true
