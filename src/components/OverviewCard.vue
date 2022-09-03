@@ -59,7 +59,7 @@ export default {
 </script>
 
 <template>
-    <div class="card list">
+    <div class="card list-card">
         <div class="card-label">{{ title }}</div>
         <ul>
             <li v-for="el in obj" @click="navigate(el)">
@@ -73,21 +73,6 @@ export default {
 </template>
 
 <style scoped>
-.list {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.card-label {
-    padding: 0 2rem;
-}
-
-.list>ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
 li {
     height: 150px;
     transition: all .2s;

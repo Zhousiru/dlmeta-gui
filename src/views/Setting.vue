@@ -47,17 +47,17 @@ export default {
     </div>
     <div class="card">
         <div class="input-label">DLmeta CLI 路径：</div>
-        <div class="combine">
+        <div class="form-combine">
             <input type="text" v-model="setting.cliPath">
             <button class="button" @click="selectSingle('file', 'cliPath')">...</button>
         </div>
         <div class="input-label">源路径：</div>
-        <div class="combine">
+        <div class="form-combine">
             <input type="text" v-model="setting.rawPath">
             <button class="button" @click="selectSingle('dir', 'rawPath')">...</button>
         </div>
         <div class="input-label">输出路径：</div>
-        <div class="combine">
+        <div class="form-combine">
             <input type="text" v-model="setting.outputPath">
             <button class="button" @click="selectSingle('dir', 'outputPath')">...</button>
         </div>
@@ -75,15 +75,6 @@ input {
 
 .input-label:not(:first-child) {
     margin-top: 1.4rem;
-}
-
-.combine {
-    display: flex;
-}
-
-.combine>button {
-    min-width: .1em;
-    margin-left: .5rem;
 }
 
 .fade-enter-active,
