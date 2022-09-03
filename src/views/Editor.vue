@@ -29,7 +29,7 @@ export default {
     <div class="card">
         <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
     </div>
-    <audio-card :audioMap="detail.audioMap" :editable="true"></audio-card>
+    <audio-card v-model:audioMap="detail.audioMap" :editable="true"></audio-card>
 </template>
 
 <style scoped>

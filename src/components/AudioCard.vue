@@ -1,11 +1,11 @@
 <script>
 export default {
     props: ['audioMap', 'editable'],
+    emits: ['update:audioMap'],
     data() {
         return {
             showDetail: [""],
             audioListRef: {},
-            tempAudioMap: undefined,
             editField: undefined,
             newValue: '',
             detected: new Set([])
@@ -27,7 +27,7 @@ export default {
                 index: index,
                 attr: attr
             }
-            this.newValue = this.tempAudioMap[this.editField.index][this.editField.attr]
+            this.newValue = this.audioMap[this.editField.index][this.editField.attr]
         },
         closeEditDialog() {
             if (String(this.newValue).trim() == '') {
@@ -39,16 +39,16 @@ export default {
                 return {
                     'string': String.bind(null, v),
                     'number': Number.bind(null, v)
-                }[typeof this.tempAudioMap[this.editField.index][this.editField.attr]]()
+                }[typeof this.audioMap[this.editField.index][this.editField.attr]]()
             }
 
-            this.tempAudioMap[this.editField.index][this.editField.attr] = typeConv(this.newValue)
+            this.audioMap[this.editField.index][this.editField.attr] = typeConv(this.newValue)
             this.editField = undefined
         },
         detect() {
             // detect invalid source
             let sourceFlag = false
-            this.tempAudioMap.some(el => {
+            this.audioMap.some(el => {
                 if (el.ignore) return
 
                 let existType = []
@@ -69,7 +69,7 @@ export default {
             // detect invalid order
             let existOrder = []
             let orderFlag = false
-            this.tempAudioMap.some(el => {
+            this.audioMap.some(el => {
                 if (el.ignore) return
 
                 if (existOrder.includes(el.order)) {
@@ -89,19 +89,11 @@ export default {
             return this.detected.has(i)
         },
         save() {
-            console.log(JSON.stringify(this.tempAudioMap)) // TODO
+            console.log(JSON.stringify(this.audioMap)) // TODO
         }
     },
     watch: {
-        audioMap() {
-            // wait for data, and keep it
-            if (this.tempAudioMap) {
-                return
-            }
-
-            this.tempAudioMap = JSON.parse(JSON.stringify(this.audioMap))
-        },
-        tempAudioMap: {
+        audioMap: {
             handler() {
                 this.detect()
             },
@@ -125,7 +117,7 @@ export default {
     <div class="card list-card">
         <div class="card-label">音频</div>
         <ol class="audio-list">
-            <li v-for="(el, index) in tempAudioMap">
+            <li v-for="(el, index) in audioMap">
                 <div class="list-header" @click="toggleDetail(el.aid)">
                     <span class="order"># {{ el.order }}</span>
                     <span class="list-title" :class="{ 'ignored-title': el.ignore }">{{ el.title }}</span>
@@ -177,16 +169,11 @@ export default {
                 <div v-if="isDetected(0)">存在多个同类源</div>
                 <div v-if="isDetected(1)">存在无效的顺序</div>
             </div>
-            <button class="button" v-if="editable" @click="save()">保存</button>
         </div>
     </div>
 </template>
 
 <style scoped>
-.card-container>button {
-    margin-top: 1rem;
-}
-
 .audio-list li {
     display: flex;
     flex-direction: column;
