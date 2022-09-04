@@ -1,7 +1,6 @@
 <script>
 export default {
     props: ['audioMap', 'editable'],
-    emits: ['update:audioMap'],
     data() {
         return {
             showDetail: [""],

@@ -102,7 +102,7 @@ input[type="checkbox"] {
     padding: .4em 1.2em;
     border-radius: 8px;
     background-color: var(--color-primary);
-    border: 2px #00000000 solid;
+    border: 2px transparent solid;
     outline: none;
     transition: all .2s;
     color: rgba(0, 0, 0, .9);
@@ -117,7 +117,7 @@ input[type="checkbox"] {
 }
 
 .button.button-outline {
-    background-color: #00000000;
+    background-color: transparent;
 }
 
 .button.button-outline:hover {
@@ -186,7 +186,7 @@ input[type="checkbox"] {
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
-    border: 2px var(--color-primary) solid;
+    border: 2px var(--color-plain) solid;
 }
 
 .alert {
