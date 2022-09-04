@@ -1,6 +1,9 @@
 <script>
+import { util } from '../mixins/util.js'
+
 export default {
     props: ['obj', 'title'],
+    mixins: [util],
     data() {
         return {
             coverStyle: {}
@@ -11,21 +14,9 @@ export default {
             handler() {
                 this.obj.forEach(async (el) => {
                     if (!el.detail) return
-                    let albumArt = el.detail.albumArt
-                    let schema = albumArt.split('//')[0]
-                    if (['http:', 'https:'].includes(schema)) {
-                        // remote image
-                        this.coverStyle[el.id] = {
-                            backgroundImage: `url(${albumArt})`
-                        }
-                    } else {
-                        // local image
-                        let absPath = await window.electronAPI.resolvePath(el.id, el.detail.albumArt)
-                        let url = absPath.replaceAll('\\', '/')
-
-                        this.coverStyle[el.id] = {
-                            backgroundImage: `url(${url})`
-                        }
+                    let url = await this.getAlbumArtUrl(el.detail.albumArt, el.id)
+                    this.coverStyle[el.id] = {
+                        backgroundImage: `url(${url})`
                     }
                 })
             },
@@ -74,7 +65,6 @@ export default {
 
 <style scoped>
 li {
-    height: 150px;
     transition: all .2s;
     display: flex;
     /* overflow: hidden; */
