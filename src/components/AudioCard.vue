@@ -19,14 +19,14 @@ export default {
                 this.showDetail.push(aid)
             }
         },
-        openEditDialog(index, attr) {
+        openEditDialog(el, attr) {
             if (!this.editable) return
 
             this.editField = {
-                index: index,
+                el: el,
                 attr: attr
             }
-            this.newValue = this.audioMap[this.editField.index][this.editField.attr]
+            this.newValue = this.editField.el[this.editField.attr]
         },
         closeEditDialog() {
             if (String(this.newValue).trim() == '') {
@@ -38,10 +38,10 @@ export default {
                 return {
                     'string': String.bind(null, v),
                     'number': Number.bind(null, v)
-                }[typeof this.audioMap[this.editField.index][this.editField.attr]]()
+                }[typeof this.editField.el[this.editField.attr]]()
             }
 
-            this.audioMap[this.editField.index][this.editField.attr] = typeConv(this.newValue)
+            this.editField.el[this.editField.attr] = typeConv(this.newValue)
             this.editField = undefined
         },
         detect() {
@@ -113,7 +113,12 @@ export default {
     <div class="card list-card">
         <div class="card-label">音频</div>
         <ol class="audio-list">
-            <li v-for="(el, index) in audioMap">
+            <li v-for="el in audioMap">
+                <div class="quick-editor" v-if="!showDetail.includes(el.aid)">
+                    <button @click="openEditDialog(el, 'title')">改标题</button>
+                    <button @click="el.ignore = true" v-if="!el.ignore">忽略</button>
+                    <button @click="el.ignore = false" v-if="el.ignore">不忽略</button>
+                </div>
                 <div class="list-header" @click="toggleDetail(el.aid)">
                     <span class="order"># {{ el.order }}</span>
                     <span class="list-title" :class="{ 'ignored-title': el.ignore }">{{ el.title }}</span>
@@ -126,13 +131,13 @@ export default {
                         </tr>
                         <tr>
                             <td>标题</td>
-                            <td @click="openEditDialog(index, 'title')" :class="{ 'editable-field': editable }">
+                            <td @click="openEditDialog(el, 'title')" :class="{ 'editable-field': editable }">
                                 {{ el.title }}
                             </td>
                         </tr>
                         <tr>
                             <td>顺序</td>
-                            <td @click="openEditDialog(index, 'order')" :class="{ 'editable-field': editable }">{{
+                            <td @click="openEditDialog(el, 'order')" :class="{ 'editable-field': editable }">{{
                                     el.order
                             }}</td>
                         </tr>
@@ -171,6 +176,7 @@ export default {
 
 <style scoped>
 .audio-list li {
+    position: relative;
     display: flex;
     flex-direction: column;
 }
@@ -246,5 +252,40 @@ td:nth-child(1) {
 .editable-field:hover {
     cursor: pointer;
     color: rgba(0, 0, 0, .5);
+}
+
+.quick-editor {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+}
+
+.audio-list>li:hover .quick-editor>button {
+    opacity: .6;
+    pointer-events: auto;
+}
+
+.quick-editor>button {
+    font-size: .6rem;
+    margin-right: .6rem;
+    padding: .4rem .8rem;
+    border-radius: 8px;
+    background-color: var(--color-primary);
+    outline: none;
+    transition: all .2s;
+    color: rgba(0, 0, 0, .9);
+    border: none;
+    box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.audio-list>li:hover .quick-editor>button:hover {
+    opacity: 1;
+    cursor: pointer;
 }
 </style>
