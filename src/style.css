@@ -98,6 +98,9 @@ input[type="checkbox"] {
 }
 
 .button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     font-size: 1rem;
     padding: .4em 1.2em;
     border-radius: 8px;

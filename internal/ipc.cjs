@@ -37,10 +37,9 @@ exports.getRawList = async (_) => {
 }
 
 exports.getDlmetaDetail = async (_, id) => {
-    let folder = await this.getRawFolderById(undefined, id)
     let data
     try {
-        data = await fs.promises.readFile(path.resolve(setting.get('rawPath'), folder, '.dlmeta.json'))
+        data = await fs.promises.readFile(await this.resolvePath(undefined, id, '.dlmeta.json'))
     } catch (e) {
         if (e.code == 'ENOENT') return undefined
     }
@@ -68,7 +67,7 @@ exports.getRawFolderById = async (_, id) => {
 }
 
 exports.getIdByFolder = async (_, folder) => {
-    return folder.split('-')[0]
+    return folder.split('-')[0] // TODO: use regex
 }
 
 exports.genDetail = async (_, id) => {
@@ -76,4 +75,9 @@ exports.genDetail = async (_, id) => {
     let folderPath = path.resolve(setting.get('rawPath'), folder)
 
     return util.execCli(`gen "${folderPath}"`)
+}
+
+exports.saveDetail = async (_, id, newDetail) => {
+    let dlmetaPath = await this.resolvePath(undefined, id, '.dlmeta.json')
+    return fs.promises.writeFile(dlmetaPath, JSON.stringify(newDetail, null, 4), { flag: 'w+' })
 }
