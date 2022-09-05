@@ -70,7 +70,7 @@ input[type="text"] {
     border: 2px var(--color-primary) solid;
     font-size: 1.2rem;
     border-radius: 8px;
-    padding: .4em;
+    padding: .4rem;
     outline: none;
     transition: all .2s;
 }
@@ -93,7 +93,7 @@ input[type="checkbox"] {
 }
 
 .form-combine>button {
-    min-width: .1em;
+    min-width: .1rem;
     margin-left: .5rem;
 }
 
@@ -102,7 +102,7 @@ input[type="checkbox"] {
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    padding: .4em 1.2em;
+    padding: .4rem 1.2rem;
     border-radius: 8px;
     background-color: var(--color-primary);
     border: 2px transparent solid;
