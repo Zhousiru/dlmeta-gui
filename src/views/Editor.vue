@@ -1,6 +1,7 @@
 <script>
 import AudioCard from '../components/AudioCard.vue'
 import { util } from '../mixins/util.js'
+import { toRaw } from 'vue'
 
 export default {
     components: { AudioCard },
@@ -13,25 +14,28 @@ export default {
                 albumArt: '',
                 remote: [],
                 local: []
-            }
+            },
+            spin: false,
+            hint: false
         }
     },
     async mounted() {
         this.id = this.$route.params.id
-        this.detail = await window.electronAPI.getDlmetaDetail(this.id)
-
-        this.image.remote = this.detail.dlImage
-        this.detail.imageMap.forEach(async el => {
-            this.image.local.push({
-                path: el,
-                url: await this.getAlbumArtUrl(el, this.id)
-            })
-        })
+        this.init()
     },
     methods: {
-        debug() {
-            console.log(JSON.stringify(this.detail, null, 4))
-            console.log(this.image)
+        async init() {
+            this.image.local = [] // reset
+            this.detail = await window.electronAPI.getDlmetaDetail(this.id)
+
+            this.image.remote = this.detail.dlImage
+
+            for (let el of this.detail.imageMap) {
+                this.image.local.push({
+                    path: el,
+                    url: await this.getAlbumArtUrl(el, this.id)
+                })
+            }
         },
         getImageStyle(url) {
             return {
@@ -44,15 +48,45 @@ export default {
         setAlbumArt(v) {
             if (this.isSelected(v)) return
             this.detail.albumArt = v
+        },
+        async save() {
+            await window.electronAPI.saveDetail(this.id, toRaw(this.detail))
+
+            this.hint = true
+            setTimeout(() => {
+                this.hint = false
+            }, 1000)
+        },
+        async reset() {
+            this.detail = await window.electronAPI.getDlmetaDetail(this.id)
+
+            this.hint = true
+            setTimeout(() => {
+                this.hint = false
+            }, 1000)
+        },
+        async rebuild() {
+            this.spin = true
+
+            let r = await window.electronAPI.genDetail(this.id)
+            console.log('[INFO][CLI]', r)
+
+            await this.init()
+
+            this.spin = false
+
+            this.hint = true
+            setTimeout(() => {
+                this.hint = false
+            }, 1000)
         }
     },
     watch: {
-        detail: {
+        'detail.albumArt': {
             async handler() {
                 if (this.detail === {}) return // wait for data
                 this.image.albumArt = await this.getAlbumArtUrl(this.detail.albumArt, this.id)
-            },
-            deep: true
+            }
         }
     }
 }
@@ -65,8 +99,14 @@ export default {
             {{ detail.title }}
         </div>
     </div>
-    <div class="card" @click="debug()">
+    <div class="card">
         <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
+    </div>
+    <div class="card title-editor">
+        <div class="card-label">
+            标题
+        </div>
+        <input type="text" v-model="detail.title">
     </div>
     <audio-card :audioMap="detail.audioMap" :editable="true"></audio-card>
     <div class="card">
@@ -90,9 +130,45 @@ export default {
             </div>
         </div>
     </div>
+    <div class="card action-button">
+        <button class="button" @click="save()">保存</button>
+        <button class="button button-outline" @click="reset()">重置</button>
+        <button class="button button-outline" @click="rebuild()">
+            <span class="spinner" style="margin-right: .5rem" v-if="spin"></span>
+            重建
+        </button>
+        <transition name="fade">
+            <span v-if="hint">完成</span>
+        </transition>
+    </div>
 </template>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.2s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.title-editor>input {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.action-button {
+    display: flex;
+    align-items: center;
+}
+
+.action-button>button:not(:first-child),
+.action-button>span {
+    margin-left: 1rem;
+}
+
 .album-art {
     width: 50%;
     max-width: 400px;

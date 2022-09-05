@@ -9,7 +9,7 @@ export default {
                 rawPath: "",
                 outputPath: ""
             },
-            show: false
+            hint: false
         }
     },
     async mounted() {
@@ -18,9 +18,10 @@ export default {
     methods: {
         saveSetting: async function () {
             await window.electronAPI.saveSetting(toRaw(this.setting))
-            this.show = true
+
+            this.hint = true
             setTimeout(() => {
-                this.show = false
+                this.hint = false
             }, 1000)
         },
         selectSingle: async function (openType, target) {
@@ -61,9 +62,9 @@ export default {
             <input type="text" v-model="setting.outputPath">
             <button class="button" @click="selectSingle('dir', 'outputPath')">...</button>
         </div>
-        <button class="button" style="margin-top: 1.4rem;" @click="saveSetting()">保存 & 应用</button>
+        <button class="button" style="margin-top: 1rem;" @click="saveSetting()">保存 & 应用</button>
         <transition name="fade">
-            <span v-if="show" style="margin-left: .6em;">已保存 & 应用</span>
+            <span v-if="hint" style="margin-left: 1rem;">完成</span>
         </transition>
     </div>
 </template>
@@ -79,7 +80,7 @@ input {
 
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.2s ease;
 }
 
 .fade-enter-from,
