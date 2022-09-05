@@ -16,7 +16,7 @@ export default {
                     if (!el.detail) return
                     let url = await this.getAlbumArtUrl(el.detail.albumArt, el.id)
                     this.coverStyle[el.id] = {
-                        backgroundImage: `url(${url})`
+                        backgroundImage: `url("${url}")`
                     }
                 })
             },
@@ -45,6 +45,9 @@ export default {
             if (el.detail) return el.detail.title
             return el.folder
         }
+    },
+    mounted() {
+        console.log(this.obj)
     }
 }
 </script>
@@ -52,6 +55,9 @@ export default {
 <template>
     <div class="card list-card">
         <div class="card-label">{{ title }}</div>
+        <div class="card-container">
+            <div class="alert primary" v-if="!obj.length">暂无</div>
+        </div>
         <ul>
             <li v-for="el in obj" @click="navigate(el)">
                 <div class="entry-image" :style="coverStyle[el.id]"></div>
@@ -67,7 +73,6 @@ export default {
 li {
     transition: all .2s;
     display: flex;
-    /* overflow: hidden; */
     padding: 1rem 2rem;
 }
 

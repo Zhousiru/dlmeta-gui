@@ -31,10 +31,11 @@ export default {
     methods: {
         debug() {
             console.log(JSON.stringify(this.detail, null, 4))
+            console.log(this.image)
         },
         getImageStyle(url) {
             return {
-                backgroundImage: `url(${url})`
+                backgroundImage: `url("${url}")`
             }
         },
         isSelected(v) {
