@@ -87,5 +87,5 @@ exports.genDetail = async (_, id) => {
     let folder = await this.getRawFolderById(undefined, id)
     let folderPath = path.resolve(setting.get('rawPath'), folder)
 
-    return util.execCli(`gen ${folderPath}`)
+    return util.execCli(`gen "${folderPath}"`)
 }
