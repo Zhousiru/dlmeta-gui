@@ -88,9 +88,6 @@ export default {
                 </div>
             </div>
         </div>
-
-        <!-- Home 性能，一次性添加，避免 watch 多次调用
-        换封面 -->
     </div>
 </template>
 

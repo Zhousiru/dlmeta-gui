@@ -19,7 +19,7 @@ export default {
     },
     methods: {
         getList: async function () {
-            this.raw = {
+            let tempRaw = {
                 ready: [],
                 done: [],
                 original: []
@@ -27,35 +27,38 @@ export default {
 
             let m = await window.electronAPI.getRawList()
 
-            m.forEach(async el => {
+            for (let el of m) {
                 let detail = await window.electronAPI.getDlmetaDetail(el.id)
 
                 if (!detail) {
-                    this.raw.original.push({
+                    tempRaw.original.push({
                         id: el.id,
                         folder: el.folder,
                         detail: undefined
                     })
-                    return
+                    continue
                 }
 
                 if (detail.status == 'done') {
-                    this.raw.done.push({
+                    tempRaw.done.push({
                         id: el.id,
                         folder: el.folder,
                         detail: detail
                     })
-                    return
+                    continue
                 }
 
                 if (detail.status == 'ready') {
-                    this.raw.ready.push({
+                    tempRaw.ready.push({
                         id: el.id,
                         folder: el.folder,
                         detail: detail
                     })
+                    continue
                 }
-            })
+            }
+
+            this.raw = tempRaw
         }
     }
 }
