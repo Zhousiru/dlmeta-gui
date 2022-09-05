@@ -78,20 +78,21 @@ export default {
             if (el.status == statusCode.genError) return '标记异常'
             // TODO
         },
-        genDetailForOriginal() {
-            this.procList.forEach(async el => {
+        async genDetailForOriginal() {
+            this.isLoading = true
+            for (let el of this.procList) {
                 if ([statusCode.original, statusCode.genError].includes(el.status)) {
-
-                    this.isLoading = true
-
                     let r = await window.electronAPI.genDetail(el.id)
-                    console.log('[INFO][CLI]', r)
+                    console.log(`[INFO][CLI][${el.id}]`, r)
+
                     if (r.stderr) el.status = statusCode.genError
                     else el.status = statusCode.ready
 
-                    this.isLoading = false
+                    let detail = await window.electronAPI.getDlmetaDetail(el.id)
+                    el.title = detail.title
                 }
-            })
+            }
+            this.isLoading = false
         },
         isEditable(el) {
             return this.isLoading ? false : el.status == statusCode.ready
@@ -102,6 +103,19 @@ export default {
             if (el.status == statusCode.ready) {
                 this.$router.push(`/editor/${el.id}`)
             }
+        },
+        async convertReady() {
+            this.isLoading = true
+            for (let el of this.procList) {
+                if ([statusCode.ready, statusCode.convError].includes(el.status)) {
+                    let r = await window.electronAPI.convert(el.id)
+                    console.log(`[INFO][CLI][${el.id}]`, r)
+
+                    if (r.stderr) el.status = statusCode.convError
+                    else el.status = statusCode.done
+                }
+            }
+            this.isLoading = false
         }
     },
     watch: {
@@ -159,7 +173,8 @@ export default {
         <div class="card-container">
             <button class="button" @click="genDetailForOriginal()" :disabled="getDisable(disable.genDetailForOriginal)"
                 title="标记全部未标记以及标记异常的项目">标记全部</button>
-            <button class="button" :disabled="getDisable(disable.convertReady)" title="转换全部待转换以及转换异常的项目">转换全部</button>
+            <button class="button" @click="convertReady()" :disabled="getDisable(disable.convertReady)"
+                title="转换全部待转换以及转换异常的项目">转换全部</button>
         </div>
     </div>
 </template>

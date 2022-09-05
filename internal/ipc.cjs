@@ -74,10 +74,17 @@ exports.genDetail = async (_, id) => {
     let folder = await this.getRawFolderById(undefined, id)
     let folderPath = path.resolve(setting.get('rawPath'), folder)
 
-    return util.execCli(`gen "${folderPath}"`)
+    return util.execCli(`gen --path="${folderPath}"`)
 }
 
 exports.saveDetail = async (_, id, newDetail) => {
     let dlmetaPath = await this.resolvePath(undefined, id, '.dlmeta.json')
     return fs.promises.writeFile(dlmetaPath, JSON.stringify(newDetail, null, 4), { flag: 'w+' })
+}
+
+exports.convert = async (_, id) => {
+    let folder = await this.getRawFolderById(undefined, id)
+    let folderPath = path.resolve(setting.get('rawPath'), folder)
+
+    return await util.execCli(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
 }
