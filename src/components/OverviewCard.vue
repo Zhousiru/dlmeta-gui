@@ -45,9 +45,6 @@ export default {
             if (el.detail) return el.detail.title
             return el.folder
         }
-    },
-    mounted() {
-        console.log(this.obj)
     }
 }
 </script>
