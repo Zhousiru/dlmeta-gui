@@ -39,7 +39,7 @@ export default {
 
                 if (!detail) {
                     m.status = statusCode.original
-                    m.title = ''
+                    m.title = undefined
                 } else {
                     m.title = detail.title
                     if (detail.status == 'done') m.status = statusCode.done
@@ -61,7 +61,7 @@ export default {
             }
         },
         getTitle(el) {
-            if (el.title) return el.title
+            if (el.title !== undefined) return el.title
             return el.folder
         },
         getBadgeClass(el) {
