@@ -131,9 +131,9 @@ export default {
         </div>
     </div>
     <div class="card action-button">
-        <button class="button" @click="save()">保存</button>
-        <button class="button button-outline" @click="reset()">重置</button>
-        <button class="button button-outline" @click="rebuild()">
+        <button class="button" @click="save()" :disabled="spin">保存</button>
+        <button class="button button-outline" @click="reset()" :disabled="spin">重置</button>
+        <button class="button button-outline" @click="rebuild()" :disabled="spin">
             <span class="spinner" style="margin-right: .5rem" v-if="spin"></span>
             重建
         </button>
