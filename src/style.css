@@ -111,6 +111,10 @@ input[type="checkbox"] {
     color: rgba(0, 0, 0, .9);
 }
 
+.button:not(:disabled):hover {
+    cursor: pointer;
+}
+
 .button:focus {
     border: 2px var(--color-accent) solid;
 }
@@ -123,7 +127,7 @@ input[type="checkbox"] {
     background-color: transparent;
 }
 
-.button.button-outline:hover {
+.button.button-outline:not(:disabled):hover {
     border: 2px var(--color-plain) solid;
 }
 
