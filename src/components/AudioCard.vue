@@ -86,9 +86,6 @@ export default {
             // 1: invalid order
             // and more?
             return this.detected.has(i)
-        },
-        save() {
-            console.log(JSON.stringify(this.audioMap)) // TODO
         }
     },
     watch: {

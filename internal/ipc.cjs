@@ -8,7 +8,7 @@ const path = require('path')
 exports.readSetting = async () => {
     await fs.promises.writeFile("./setting.json", '', { flag: 'a' })
 
-    let data;
+    let data
     data = await fs.promises.readFile("./setting.json")
 
     return JSON.parse(data.toString())
@@ -22,18 +22,6 @@ exports.saveSetting = async (_, settingObj) => {
 exports.showOpenDialog = async (_, props) => {
     return dialog.showOpenDialog({ properties: props })
 }
-
-// exports.getFolderList = async (_, target) => {
-//     let targetPath = setting.get(target)
-
-//     let list = await fs.promises.readdir(targetPath, { withFileTypes: true })
-//     let folder = []
-//     list.forEach((file) => {
-//         if (file.isDirectory()) folder.push(file.name)
-//     })
-
-//     return folder
-// }
 
 exports.getRawList = async (_) => {
     let list = await fs.promises.readdir(setting.get('rawPath'), { withFileTypes: true })
@@ -74,7 +62,7 @@ exports.getRawFolderById = async (_, id) => {
             folder = el.folder
             return true
         }
-    });
+    })
 
     return folder
 }
