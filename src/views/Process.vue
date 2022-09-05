@@ -94,9 +94,11 @@ export default {
             })
         },
         isEditable(el) {
-            return el.status == statusCode.ready
+            return this.isLoading ? false : el.status == statusCode.ready
         },
         editDetail(el) {
+            if (this.isLoading) return
+
             if (el.status == statusCode.ready) {
                 this.$router.push(`/editor/${el.id}`)
             }
