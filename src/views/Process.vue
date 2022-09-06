@@ -94,12 +94,12 @@ export default {
             this.isLoading = false
         },
         isEditable(el) {
-            return this.isLoading ? false : el.status == statusCode.ready
+            return this.isLoading ? false : [statusCode.ready, statusCode.convError].includes(el.status)
         },
         editDetail(el) {
             if (this.isLoading) return
 
-            if (el.status == statusCode.ready) {
+            if ([statusCode.ready, statusCode.convError].includes(el.status)) {
                 this.$router.push(`/editor/${el.id}`)
             }
         },
