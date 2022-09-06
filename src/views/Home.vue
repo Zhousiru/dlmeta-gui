@@ -73,9 +73,9 @@ export default {
         <button class="button button-outline" @click="this.$router.push('/setting')"
             style="margin-left: auto;">设置</button>
     </div>
-    <overview-card :obj="raw.original" title="未标记"></overview-card>
-    <overview-card :obj="raw.ready" title="待转换"></overview-card>
-    <overview-card :obj="raw.done" title="已完成"></overview-card>
+    <overview-card :obj="raw.original" status="original"></overview-card>
+    <overview-card :obj="raw.ready" status="ready"></overview-card>
+    <overview-card :obj="raw.done" status="done"></overview-card>
 </template>
 
 <style scoped>

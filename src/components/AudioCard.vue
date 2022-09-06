@@ -114,10 +114,10 @@ export default {
         <div class="card-label">音频</div>
         <ol class="audio-list">
             <li v-for="el in audioMap">
-                <div class="quick-editor" v-if="!showDetail.includes(el.aid)">
-                    <button @click="openEditDialog(el, 'title')">改标题</button>
-                    <button @click="el.ignore = true" v-if="!el.ignore">忽略</button>
-                    <button @click="el.ignore = false" v-if="el.ignore">不忽略</button>
+                <div class="quick-editor" v-if="!showDetail.includes(el.aid) && editable">
+                    <button class="lite-button" @click="openEditDialog(el, 'title')">改标题</button>
+                    <button class="lite-button" @click="el.ignore = true" v-if="!el.ignore">忽略</button>
+                    <button class="lite-button" @click="el.ignore = false" v-if="el.ignore">不忽略</button>
                 </div>
                 <div class="list-header" @click="toggleDetail(el.aid)">
                     <span class="order"># {{ el.order }}</span>
@@ -264,28 +264,17 @@ td:nth-child(1) {
     pointer-events: none;
 }
 
-.audio-list>li:hover .quick-editor>button {
+.audio-list>li:hover .quick-editor>.lite-button {
     opacity: .6;
     pointer-events: auto;
 }
 
-.quick-editor>button {
-    font-size: .6rem;
-    margin-right: .6rem;
-    padding: .4rem .8rem;
-    border-radius: 8px;
-    background-color: var(--color-primary);
-    outline: none;
-    transition: all .2s;
-    color: rgba(0, 0, 0, .9);
-    border: none;
-    box-shadow: 0 5px 4px 1px rgba(0, 0, 0, .05);
+.quick-editor>.lite-button {
     opacity: 0;
     pointer-events: none;
 }
 
-.audio-list>li:hover .quick-editor>button:hover {
+.audio-list>li:hover .quick-editor>.lite-button:hover {
     opacity: 1;
-    cursor: pointer;
 }
 </style>

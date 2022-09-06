@@ -69,14 +69,13 @@ export default {
             if (el.status == statusCode.ready) return 'info'
             if (el.status == statusCode.done) return 'success'
             if ([statusCode.genError, statusCode.convError].includes(el.status)) return 'error'
-            // TODO
         },
         getBadgeText(el) {
             if (el.status == statusCode.original) return '未标记'
             if (el.status == statusCode.ready) return '待转换'
             if (el.status == statusCode.done) return '已完成'
             if (el.status == statusCode.genError) return '标记异常'
-            // TODO
+            if (el.status == statusCode.convError) return '转换异常'
         },
         async genDetailForOriginal() {
             this.isLoading = true
@@ -149,9 +148,6 @@ export default {
 <template>
     <div class="card">
         <h1>处理向导</h1>
-        <div class="subtitle">
-            {{ $route.params.id /* TODO */ }}
-        </div>
     </div>
     <div class="card">
         <button class="button button-outline" @click="this.$router.go(-1)">返回</button>
