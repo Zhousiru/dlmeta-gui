@@ -86,5 +86,6 @@ exports.convert = async (_, id) => {
     let folder = await this.getRawFolderById(undefined, id)
     let folderPath = path.resolve(setting.get('rawPath'), folder)
 
+    console.log(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
     return await util.execCli(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
 }
