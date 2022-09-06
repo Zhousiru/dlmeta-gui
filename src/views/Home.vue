@@ -11,11 +11,21 @@ export default {
                 ready: [],
                 done: [],
                 original: []
-            }
+            },
+            hint: false
         }
     },
-    mounted() {
-        this.getList()
+    async mounted() {
+        let setting = await window.electronAPI.readSetting()
+        if (Object.keys(setting).length == 0) {
+            this.hint = true
+        } else {
+            try {
+                await this.getList()
+            } catch (e) {
+                this.hint = true
+            }
+        }
     },
     methods: {
         getList: async function () {
@@ -69,13 +79,18 @@ export default {
         <h1>概览</h1>
     </div>
     <div class="card" id="nav">
-        <button class="button button-outline" @click="getList()">刷新</button>
+        <button class="button button-outline" @click="getList()" :disabled="hint">刷新</button>
         <button class="button button-outline" @click="this.$router.push('/setting')"
             style="margin-left: auto;">设置</button>
     </div>
-    <overview-card :obj="raw.original" status="original"></overview-card>
-    <overview-card :obj="raw.ready" status="ready"></overview-card>
-    <overview-card :obj="raw.done" status="done" @refresh="getList()"></overview-card>
+    <div class="card" v-if="hint">
+        <div class="alert error">发生错误，设置可能无效，请检查设置</div>
+    </div>
+    <div v-if="!hint">
+        <overview-card :obj="raw.original" status="original"></overview-card>
+        <overview-card :obj="raw.ready" status="ready"></overview-card>
+        <overview-card :obj="raw.done" status="done" @refresh="getList()"></overview-card>
+    </div>
 </template>
 
 <style scoped>

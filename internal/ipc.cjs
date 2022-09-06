@@ -6,16 +6,14 @@ const util = require('./util.cjs')
 const path = require('path')
 
 exports.readSetting = async () => {
-    await fs.promises.writeFile("./setting.json", '', { flag: 'a' })
+    let str = (await fs.promises.readFile('./setting.json')).toString()
+    if (!str.trim()) str = '{}'
 
-    let data
-    data = await fs.promises.readFile("./setting.json")
-
-    return JSON.parse(data.toString())
+    return JSON.parse(str)
 }
 
 exports.saveSetting = async (_, settingObj) => {
-    await fs.promises.writeFile("./setting.json", JSON.stringify(settingObj, null, 4), { flag: 'w+' })
+    await fs.promises.writeFile('./setting.json', JSON.stringify(settingObj, null, 4), { flag: 'w' })
     setting.loadSetting()
 }
 
@@ -95,5 +93,5 @@ exports.rebuild = async (_, id) => {
     let dlmetaPath = await this.resolvePath(undefined, id, '.dlmeta.json')
 
     fs.unlinkSync(dlmetaPath)
-    fs.rmSync(outputPath, { recursive: true, force: true });
+    fs.rmSync(outputPath, { recursive: true, force: true })
 }
