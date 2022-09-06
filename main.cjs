@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron')
+const { app, BrowserWindow, ipcMain, MenuItem, Menu, shell } = require('electron')
 const path = require('path')
 
 const ipc = require('./internal/ipc.cjs')
@@ -6,16 +6,50 @@ const setting = require('./internal/setting.cjs')
 
 const createWindow = () => {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1200,
+        height: 800,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js')
         }
     })
 
-    win.loadFile('./dist/index.html')
+    win.setTitle('DLmeta GUI')
 
-    win.webContents.openDevTools()
+    let menu = new Menu
+    menu.append(
+        new MenuItem({
+            label: 'Dev',
+            submenu: [{
+                label: 'Open DevTools',
+                click: function () {
+                    win.webContents.openDevTools()
+                }
+            }]
+        })
+    )
+    menu.append(
+        new MenuItem({
+            label: 'About',
+            submenu: [
+                {
+                    label: 'GitHub: Zhousiru/dlmeta-gui',
+                    click: function () {
+                        shell.openExternal('https://github.com/Zhousiru/dlmeta-gui')
+                    }
+                },
+                {
+                    label: 'GitHub: Zhousiru/dlmeta',
+                    click: function () {
+                        shell.openExternal('https://github.com/Zhousiru/dlmeta')
+                    }
+                }
+            ]
+        })
+    )
+
+    win.setMenu(menu)
+
+    win.loadFile('./dist/index.html')
 }
 
 app.whenReady().then(() => {

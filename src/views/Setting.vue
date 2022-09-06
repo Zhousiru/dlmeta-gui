@@ -32,7 +32,15 @@ export default {
                 props = ['openDirectory']
             }
 
-            let r = (await window.electronAPI.showOpenDialog(props)).filePaths[0]
+            let filters = []
+            if (target == 'cliPath') {
+                filters = [{
+                    'name': "DLmeta CLI",
+                    'extensions': ['py']
+                }]
+            }
+
+            let r = (await window.electronAPI.showOpenDialog(props, filters)).filePaths[0]
             if (r) this.setting[target] = r
         }
     }
