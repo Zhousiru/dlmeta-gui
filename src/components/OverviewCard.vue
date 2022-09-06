@@ -3,6 +3,7 @@ import { util } from '../mixins/util.js'
 
 export default {
     props: ['obj', 'title', 'status'],
+    emits: ['refresh'],
     mixins: [util],
     data() {
         return {
@@ -73,8 +74,12 @@ export default {
             let str = [...this.selected].join(',')
             this.$router.push(`/process/${str}`)
         },
-        resetSelected() {
-            // TODO
+        async rebuildSelected() {
+            for(let id of this.selected) {
+                await window.electronAPI.rebuild(id)
+            }
+            this.selected.clear()
+            this.$emit('refresh')
         }
     }
 }
@@ -95,7 +100,7 @@ export default {
                 <button @click="processSelected()"
                     v-if="isSelected(undefined, 'any') && ['original', 'ready'].includes(status)"
                     class="lite-button">处理选中</button>
-                <button @click="resetSelected()" v-if="isSelected(undefined, 'any') && status == 'done'"
+                <button @click="rebuildSelected()" v-if="isSelected(undefined, 'any') && status == 'done'"
                     class="lite-button">重建选中</button>
             </div>
         </div>

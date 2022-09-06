@@ -75,7 +75,7 @@ export default {
     </div>
     <overview-card :obj="raw.original" status="original"></overview-card>
     <overview-card :obj="raw.ready" status="ready"></overview-card>
-    <overview-card :obj="raw.done" status="done"></overview-card>
+    <overview-card :obj="raw.done" status="done" @refresh="getList()"></overview-card>
 </template>
 
 <style scoped>

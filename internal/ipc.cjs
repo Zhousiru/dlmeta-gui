@@ -84,8 +84,16 @@ exports.saveDetail = async (_, id, newDetail) => {
 
 exports.convert = async (_, id) => {
     let folder = await this.getRawFolderById(undefined, id)
-    let folderPath = path.resolve(setting.get('rawPath'), folder)
+    let folderPath = path.resolve(setting.get('rawPath'), folder) // await this.resolvePath(undefined, id, '')
 
-    console.log(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
     return await util.execCli(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
+}
+
+exports.rebuild = async (_, id) => {
+    let detail = await this.getDlmetaDetail(_, id)
+    let outputPath = path.resolve(setting.get('outputPath'), detail.title)
+    let dlmetaPath = await this.resolvePath(undefined, id, '.dlmeta.json')
+
+    fs.unlinkSync(dlmetaPath)
+    fs.rmSync(outputPath, { recursive: true, force: true });
 }
