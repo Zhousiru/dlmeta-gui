@@ -13,6 +13,7 @@
 }
 
 body {
+    overflow-y: scroll;
     background-color: var(--color-plain);
 }
 

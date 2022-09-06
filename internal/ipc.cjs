@@ -17,8 +17,8 @@ exports.saveSetting = async (_, settingObj) => {
     setting.loadSetting()
 }
 
-exports.showOpenDialog = async (_, props) => {
-    return dialog.showOpenDialog({ properties: props })
+exports.showOpenDialog = async (_, props, filters) => {
+    return dialog.showOpenDialog({ properties: props, filters: filters })
 }
 
 exports.getRawList = async (_) => {
@@ -81,8 +81,7 @@ exports.saveDetail = async (_, id, newDetail) => {
 }
 
 exports.convert = async (_, id) => {
-    let folder = await this.getRawFolderById(undefined, id)
-    let folderPath = path.resolve(setting.get('rawPath'), folder) // await this.resolvePath(undefined, id, '')
+    let folderPath = await this.resolvePath(undefined, id, '')
 
     return await util.execCli(`conv --path="${folderPath}" --target="mp3" --copy=True --output="${setting.get('outputPath')}"`)
 }
