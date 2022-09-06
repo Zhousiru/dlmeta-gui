@@ -144,6 +144,12 @@ export default {
 </template>
 
 <style scoped>
+.action-button {
+    position: sticky;
+    bottom: -16px;
+    z-index: 233;
+}
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.2s ease;
