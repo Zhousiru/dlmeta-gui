@@ -26,11 +26,11 @@ export default {
         this.refreshList()
     },
     methods: {
-        refreshList() {
+        async refreshList() {
             this.procList = []
 
             let idList = this.$route.params.id.split(',')
-            idList.forEach(async id => {
+            for (let id of idList) {
                 let m = {}
                 let detail = await window.electronAPI.getDlmetaDetail(id)
 
@@ -47,7 +47,7 @@ export default {
                 }
 
                 this.procList.push(m)
-            })
+            }
         },
         getDisable(b) {
             return this.isLoading ? true : b
