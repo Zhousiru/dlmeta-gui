@@ -2,7 +2,7 @@
 
 为你的 DLsite 音声资源转换格式，添加元信息，以在播放器显示封面、筛选社团 / CV。
 
-关联项目：[Zhousiru/dlmeta](https://github.com/Zhousiru/dlmeta-gui)
+关联项目：[Zhousiru/dlmeta](https://github.com/Zhousiru/dlmeta)
 
 ## 效果
 
@@ -49,7 +49,7 @@ RJ325494-道草屋-なつな-田舎のバスとたぬきさん。
 
 1. 下载 `ffmpeg`，并将其添加到环境变量
    （[Windows Builds](https://github.com/BtbN/FFmpeg-Builds/releases)）
-2. 下载 [Zhousiru/dlmeta](https://github.com/Zhousiru/dlmeta-gui) （需要安装 Python）
+2. 下载 [Zhousiru/dlmeta](https://github.com/Zhousiru/dlmeta) （需要安装 Python）
 3. 从 [release](https://github.com/Zhousiru/dlmeta-gui/releases) 下载 DLmeta GUI，或自行打包
 4. 打开 DLmeta GUI，进行设置
 5. 完成 \_(:з」∠)\_
