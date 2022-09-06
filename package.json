@@ -1,7 +1,7 @@
 {
   "name": "dlmeta-gui",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "main.cjs",
   "scripts": {
     "dev": "vite",
@@ -23,7 +23,6 @@
     "vite": "^3.0.0"
   },
   "build": {
-    
     "appId": "moe.qxq.dlmeta-gui",
     "directories": {
       "output": "./build"
